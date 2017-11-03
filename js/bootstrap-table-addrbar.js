@@ -11,7 +11,7 @@
      * key: 参数名
      * url: 默认为当前地址栏
      */
-    function getQueryParams(key, url){
+    function _GET(key, url){
         var url = url ? url : window.location.search;
         /* 
         * 注意这里正则表达式的书写方法
@@ -31,14 +31,14 @@
     * function: 根据给定参数生成url地址
     * var dic = {name: 'genreal', age: 24}
     * var url = 'https://www.baidu.com?age=22';
-    * buildUrl(dic, url);
+    * _buildUrl(dic, url);
     * 将得到"https://www.baidu.com?age=24&name=genreal"
     * 哦, 忽略先后顺序吧...
     * 
     * 补充: 可以参考浏览器URLSearchParams对象, 更加方便和强大
     */
 
-    function buildUrl(dict, url){
+    function _buildUrl(dict, url){
         var url = url ? url : window.location.search;
 
         for(var key in dict){
@@ -71,37 +71,54 @@
         if(! typeof option === 'object') 
             return $.fn._bootstrapTable.call(this, option);
         
+        // 拥有addrbar选项并且其值为true的才会继续执行
+        if(!(option.hasOwnProperty('addrbar') && option.addrbar == true))
+            return $.fn._bootstrapTable.call(this, option);
+        // 标志位, 初始加载后关闭
+        option._addrbarInit = true;
+        var _prefix = option.prefix ? option.prefix : '';
         var _defaults = $.fn._bootstrapTable.defaults;
 
         // console.log(option.pageSize);
         // 优先级排序: 用户指定值最优先, 未指定时从地址栏获取, 未获取到时采用默认值
 
-        option.pageSize = option.pageSize ? option.pageSize : (getQueryParams('limit') ? parseInt(getQueryParams('limit')): _defaults.pageSize);
-        option.pageNumber = option.pageNumber ? option.pageNumber : (getQueryParams('page') ? parseInt(getQueryParams('page')): _defaults.pageNumber);
-        option.sortOrder = option.sortOrder ? option.sortOrder : (getQueryParams('order') ? parseInt(getQueryParams('order')): _defaults.sortOrder);
-        option.sortName = option.sortName ? option.sortName : (getQueryParams('sort') ? parseInt(getQueryParams('sort')): _defaults.sortName);
-        option.searchText = option.searchText ? option.searchText : (getQueryParams('search') ? parseInt(getQueryParams('search')): _defaults.searchText);
+        option.pageSize = option.pageSize ? option.pageSize : (
+            _GET(_prefix + 'limit') ? parseInt(_GET(_prefix + 'limit')): _defaults.pageSize
+        );
+        option.pageNumber = option.pageNumber ? option.pageNumber : (
+            _GET(_prefix + 'page') ? parseInt(_GET(_prefix + 'page')): _defaults.pageNumber
+        );
+        option.sortOrder = option.sortOrder ? option.sortOrder : (
+            _GET(_prefix + 'order') ? _GET(_prefix + 'order'): _defaults.sortOrder
+        );
+        option.sortName = option.sortName ? option.sortName : (
+            _GET(_prefix + 'sort') ? _GET(_prefix + 'sort'): 'id'
+        );
+        option.searchText = option.searchText ? option.searchText : (
+            _GET(_prefix + 'search') ? _GET(_prefix + 'search'): _defaults.searchText
+        );
 
-        
+        option._onLoadSuccess = option.onLoadSuccess;
         option.onLoadSuccess = function(data){
-            // md, 这里的this是options是什么鬼
+            // md, 这里的this是option是什么鬼(好像貌似就是option...ok, 当我没说)
             var opts = this;
             // 页面初始加载不必改写url
-            if(opts.init){
-                opts.init = false;
+            if(opts._addrbarInit){
+                opts._addrbarInit = false;
                 return;
-            } 
+            }
             var params = {
-                page: opts.pageNumber,
-                limit: opts.pageSize,
-                order: opts.sortOrder,
-                sort: opts.sortName,
-                search: opts.searchText
+                page:       opts.pageNumber,
+                limit:      opts.pageSize,
+                order:      opts.sortOrder,
+                sort:       opts.sortName,
+                search:     opts.searchText
             };
             // h5提供的修改浏览器地址栏的方法
-            window.history.pushState({}, '', buildUrl(params));
+            window.history.pushState({}, '', _buildUrl(params));
+            
+            if(option._onLoadSuccess) option._onLoadSuccess.call(this, data);
         };
-        
 
         return $.fn._bootstrapTable.call(this, option);
     };

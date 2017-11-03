@@ -31,7 +31,6 @@ function resHandler(res){
         {title: '是否已删除', field: 'delete_status'}
     ];
     var tableOpts = {
-        init:   true,
         columns: [],
         classes: 'table table-hover table-no-bordered',
         sidePagination: 'server',
@@ -45,19 +44,11 @@ function resHandler(res){
         pageList: [20, 50, 100, 500],
         striped: false,
 
-        /*
-         * 页面加载初, 从浏览器地址栏获取这5个参数
-         */
-        pageSize: getQueryParams('limit') ? parseInt(getQueryParams('limit')) : 20,
-        pageNumber: getQueryParams('page') ? parseInt(getQueryParams('page')) : 1,
-        searchText: getQueryParams('search') ? getQueryParams('search') : '',
-        sortOrder: getQueryParams('order') ? getQueryParams('order') : 'asc',
-        sortName: getQueryParams('sort') ? getQueryParams('sort') : 'id',
-
+        addrbar: true,
         columns:            columnInfo,                        
         url:                'http://172.16.3.50/enterprise/project/query2',
         queryParams: function(params){
-            params.csrf_token = '1509550175##46383e4f5f1209706575c7d5a217b92cd82ead0b';            
+            params.csrf_token = '1509702353##f99c155be47563b27a44b431ae437e582f01e8b9';            
             return params;
         },
         ajax: function (request) {
@@ -66,6 +57,11 @@ function resHandler(res){
             request.jsonpCallback = 'resHandler';
             $.ajax(request);
         },
+        onLoadSuccess: function(data){
+            console.log(123);
+            console.log(this);
+            console.log(data);
+        }
     }
     $('#bt-table').bootstrapTable(tableOpts);
 })();
