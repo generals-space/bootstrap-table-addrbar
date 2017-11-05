@@ -69,7 +69,10 @@
     $.fn._bootstrapTable = $.fn.bootstrapTable;
     $.fn.bootstrapTable = function(option){
         if(!(typeof option === 'object')) 
-            return $.fn._bootstrapTable.call(this, option);
+            // 直接传入arguments不行, 因为它是一个类数组的对象, 
+            // 而bt对参数的处理是面向原生参数列表的.
+            // 目前来看, bt还没有超过2个参数的方法, 暂时先这么用着
+            return $.fn._bootstrapTable.call(this, arguments[0], arguments[1]);
         
         // 拥有addrbar选项并且其值为true的才会继续执行
         if(!(option.hasOwnProperty('addrbar') && option.addrbar == true))
