@@ -68,7 +68,7 @@
      */
     $.fn._bootstrapTable = $.fn.bootstrapTable;
     $.fn.bootstrapTable = function(option){
-        if(! typeof option === 'object') 
+        if(!(typeof option === 'object')) 
             return $.fn._bootstrapTable.call(this, option);
         
         // 拥有addrbar选项并且其值为true的才会继续执行
