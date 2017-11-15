@@ -68,11 +68,12 @@
      */
     $.fn._bootstrapTable = $.fn.bootstrapTable;
     $.fn.bootstrapTable = function(option){
-        if(!(typeof option === 'object')) 
+        if(!(typeof option === 'object')){
             // 直接传入arguments不行, 因为它是一个类数组的对象, 
             // 而bt对参数的处理是面向原生参数列表的.
             // 目前来看, bt还没有超过2个参数的方法, 暂时先这么用着
             return $.fn._bootstrapTable.call(this, arguments[0], arguments[1]);
+        }
         
         // 拥有addrbar选项并且其值为true的才会继续执行
         if(!(option.hasOwnProperty('addrbar') && option.addrbar == true))
@@ -108,17 +109,17 @@
             // 页面初始加载不必改写url
             if(opts._addrbarInit){
                 opts._addrbarInit = false;
-                return;
+            }else{
+                var params = {
+                    page:       opts.pageNumber,
+                    limit:      opts.pageSize,
+                    order:      opts.sortOrder,
+                    sort:       opts.sortName,
+                    search:     opts.searchText
+                };
+                // h5提供的修改浏览器地址栏的方法
+                window.history.pushState({}, '', _buildUrl(params));
             }
-            var params = {
-                page:       opts.pageNumber,
-                limit:      opts.pageSize,
-                order:      opts.sortOrder,
-                sort:       opts.sortName,
-                search:     opts.searchText
-            };
-            // h5提供的修改浏览器地址栏的方法
-            window.history.pushState({}, '', _buildUrl(params));
             
             if(option._onLoadSuccess) option._onLoadSuccess.call(this, data);
         };
