@@ -1,6 +1,8 @@
 /**
- * @author general
- * extensions: https://github.com/
+ * @author: general
+ * @version: 1.0.0
+ * @website: note.generals.space
+ * @email: generals.space@gmail.com
  */
 
 (function ($) {
@@ -35,7 +37,8 @@
     * 将得到"https://www.baidu.com?age=24&name=genreal"
     * 哦, 忽略先后顺序吧...
     * 
-    * 补充: 可以参考浏览器URLSearchParams对象, 更加方便和强大
+    * 补充: 可以参考浏览器URLSearchParams对象, 更加方便和强大. 
+    * 考虑到兼容性, 暂时不使用这个工具.
     */
 
     function _buildUrl(dict, url){
@@ -66,39 +69,38 @@
     /*
      * 实例化bootstrapTable对象时, 合并用户选项
      */
-    $.fn._bootstrapTable = $.fn.bootstrapTable;
+    var _bootstrapTable = $.fn.bootstrapTable;
     $.fn.bootstrapTable = function(option){
         if(!(typeof option === 'object')){
             // 直接传入arguments不行, 因为它是一个类数组的对象, 
             // 而bt对参数的处理是面向原生参数列表的.
             // 目前来看, bt还没有超过2个参数的方法, 暂时先这么用着
-            return $.fn._bootstrapTable.call(this, arguments[0], arguments[1]);
+            return _bootstrapTable.call(this, arguments[0], arguments[1]);
         }
-        
+
         // 拥有addrbar选项并且其值为true的才会继续执行
         if(!(option.hasOwnProperty('addrbar') && option.addrbar == true))
-            return $.fn._bootstrapTable.call(this, option);
+            return _bootstrapTable.call(this, option);
         // 标志位, 初始加载后关闭
         option._addrbarInit = true;
-        var _prefix = option.prefix ? option.prefix : '';
-        var _defaults = $.fn._bootstrapTable.defaults;
+        var _prefix = option.addrPrefix || '';
+        var _defaults = _bootstrapTable.defaults;
 
-        // console.log(option.pageSize);
         // 优先级排序: 用户指定值最优先, 未指定时从地址栏获取, 未获取到时采用默认值
 
-        option.pageSize = option.pageSize ? option.pageSize : (
+        option.pageSize = option.pageSize || (
             _GET(_prefix + 'limit') ? parseInt(_GET(_prefix + 'limit')): _defaults.pageSize
         );
-        option.pageNumber = option.pageNumber ? option.pageNumber : (
+        option.pageNumber = option.pageNumber || (
             _GET(_prefix + 'page') ? parseInt(_GET(_prefix + 'page')): _defaults.pageNumber
         );
-        option.sortOrder = option.sortOrder ? option.sortOrder : (
+        option.sortOrder = option.sortOrder || (
             _GET(_prefix + 'order') ? _GET(_prefix + 'order'): _defaults.sortOrder
         );
-        option.sortName = option.sortName ? option.sortName : (
+        option.sortName = option.sortName || (
             _GET(_prefix + 'sort') ? _GET(_prefix + 'sort'): 'id'
         );
-        option.searchText = option.searchText ? option.searchText : (
+        option.searchText = option.searchText || (
             _GET(_prefix + 'search') ? _GET(_prefix + 'search'): _defaults.searchText
         );
 
@@ -110,20 +112,19 @@
             if(opts._addrbarInit){
                 opts._addrbarInit = false;
             }else{
-                var params = {
-                    page:       opts.pageNumber,
-                    limit:      opts.pageSize,
-                    order:      opts.sortOrder,
-                    sort:       opts.sortName,
-                    search:     opts.searchText
-                };
+                var params = {};
+                params[_prefix + 'page']       = opts.pageNumber,
+                params[_prefix + 'limit']      = opts.pageSize,
+                params[_prefix + 'order']      = opts.sortOrder,
+                params[_prefix + 'sort']       = opts.sortName,
+                params[_prefix + 'search']     = opts.searchText
                 // h5提供的修改浏览器地址栏的方法
                 window.history.pushState({}, '', _buildUrl(params));
             }
-            
+
             if(option._onLoadSuccess) option._onLoadSuccess.call(this, data);
         };
 
-        return $.fn._bootstrapTable.call(this, option);
+        return _bootstrapTable.call(this, option);
     };
 })(jQuery);
