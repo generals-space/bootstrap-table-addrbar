@@ -86,23 +86,17 @@
         var _prefix = option.addrPrefix || '';
         var _defaults = _bootstrapTable.defaults;
 
-        // 优先级排序: 用户指定值最优先, 未指定时从地址栏获取, 未获取到时采用默认值
-
-        option.pageSize = option.pageSize || (
-            _GET(_prefix + 'limit') ? parseInt(_GET(_prefix + 'limit')): _defaults.pageSize
-        );
-        option.pageNumber = option.pageNumber || (
-            _GET(_prefix + 'page') ? parseInt(_GET(_prefix + 'page')): _defaults.pageNumber
-        );
-        option.sortOrder = option.sortOrder || (
-            _GET(_prefix + 'order') ? _GET(_prefix + 'order'): _defaults.sortOrder
-        );
-        option.sortName = option.sortName || (
-            _GET(_prefix + 'sort') ? _GET(_prefix + 'sort'): 'id'
-        );
-        option.searchText = option.searchText || (
-            _GET(_prefix + 'search') ? _GET(_prefix + 'search'): _defaults.searchText
-        );
+        // 优先级排序: 优先从地址栏获取, 没有读取到时使用用户的指定值, 用户未定义时采用默认值
+        var _limit = _GET(_prefix + 'limit');
+        var _page = _GET(_prefix + 'page');
+        var _order = _GET(_prefix + 'order');
+        var _sort = _GET(_prefix + 'sort');
+        var _search = _GET(_prefix + 'search');
+        option.pageSize = _limit ? parseInt(_limit) : (option.pageSize || _defaults.pageSize);
+        option.pageNumber = _page ? parseInt(_page) : (option.pageNumber || _defaults.pageNumber);
+        option.sortOrder =  _order ? _order : (option.sortOrder || _defaults.sortOrder);
+        option.sortName = _sort ? _sort : (option.sortName || 'id');
+        option.searchText =  _search ? _search : (option.searchText || _defaults.searchText);
 
         option._onLoadSuccess = option.onLoadSuccess;
         option.onLoadSuccess = function(data){
