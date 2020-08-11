@@ -6,9 +6,9 @@
 
 如下图
 
-![](https://gitimg.generals.space/611efd443ea59eccd61744c5ebd09452.png)
+![](https://gitee.com/generals-space/gitimg/raw/master/611efd443ea59eccd61744c5ebd09452.png)
 
-![](https://gitimg.generals.space/92515aa02c863a19daf76a8804990092.png)
+![](https://gitee.com/generals-space/gitimg/raw/master/92515aa02c863a19daf76a8804990092.png)
 
 可用选项
 
@@ -44,13 +44,9 @@
 默认情况下, 地址栏将有5个参数, 分别为
 
 - `page`: 页码
-
 - `limit`: 每页行数
-
 - `order`: 升序/降序
-
 - `sort`: 排序关键字
-
 - `search`: 搜索关键字
 
 如果多个表格同时使用这些参数, 就会导致一张表格的变动会影响其他表格. 在参数中添加`addrPrefix`字段, 为每个表格都指定一个唯一的前缀, 可以避免这个问题.
@@ -70,7 +66,7 @@
     $('#bt-table2').bootstrapTable(tableOpts2);
 ```
 
-![](https://gitimg.generals.space/5badfcee02a1998e279b432090a3d2b2.png)
+![](https://gitee.com/generals-space/gitimg/raw/master/5badfcee02a1998e279b432090a3d2b2.png)
 
 ## 3. 注意:
 
