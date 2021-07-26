@@ -1,5 +1,10 @@
 # bootstrap-table-addrbar
 
+参考文章
+
+1. [同时设置pageNumber和searchText初始值会冲突](https://github.com/wenzhixin/bootstrap-table/issues/2580)
+    - v1.11.0版本中, `search`字段与`page`字段同时出现导致初始值冲突的问题, 请参考, 已于v1.14.2版本修复;
+
 ## 1. 有什么效果?
 
 将页面切换, 排序事件和搜索事件都回显到地址栏中, 在刷新页面时, 优先读取地址栏的参数, 从而自动在请求时使用对应页码和搜索条件, 可以保持当前各种状态不变. 
@@ -13,7 +18,6 @@
 可用选项
 
 1. `addrbar`: 是否开启地址栏显示, true/false, 默认为false;
-
 2. `addrPrefix`: 地址栏参数前缀, 默认为'', 同时存在多个表格时使用. 
 
 ## 2. 你需要做什么?
@@ -23,7 +27,7 @@
 ```html
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap-table/1.10.0/bootstrap-table.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.14.2/bootstrap-table.min.js"></script>
     <script src="./bootstrap-table-addrbar.js"></script>
 ```
 
@@ -71,7 +75,4 @@
 ## 3. 注意:
 
 1. 该插件不适用于客户端分页;
-
 2. demo的后台中没有对排序和搜索做处理, 所以可能看不到效果;
-
-至于search字段与page字段同时出现导致初始值冲突的问题, 请参考[同时设置pageNumber和searchText初始值会冲突](https://github.com/wenzhixin/bootstrap-table/issues/2580);

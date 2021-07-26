@@ -23,7 +23,7 @@ like this
 ```html
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap-table/1.10.0/bootstrap-table.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.14.2/bootstrap-table.min.js"></script>
     <script src="./bootstrap-table-addrbar.js"></script>
 ```
 
