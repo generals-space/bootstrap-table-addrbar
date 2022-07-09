@@ -1,0 +1,16 @@
+{
+  "name": "fake_server",
+  "version": "1.0.0",
+  "description": "用于生成bootstrap table的后台数据",
+  "main": "index.js",
+  "scripts": {
+    "run": "node index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "general",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
