@@ -7,7 +7,7 @@
 
 ## 1. 有什么效果?
 
-将页面切换, 排序事件和搜索事件都回显到地址栏中, 在刷新页面时, 优先读取地址栏的参数, 从而自动在请求时使用对应页码和搜索条件, 可以保持当前各种状态不变. 
+将页面切换, 排序和搜索事件都回显到地址栏中, 在刷新页面时, 优先读取地址栏的参数, 从而自动在请求时使用对应页码和搜索条件, 可以保持当前各种状态不变. 另外, 点击浏览器的前进/后退按钮, 同样可以实现页面切换.
 
 如下图
 
@@ -27,7 +27,9 @@
 ```html
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap-table/1.14.2/bootstrap-table.min.js"></script>
+    <!--
+        <script src="https://raw.githubusercontent.com/generals-space/bootstrap-table-addrbar/master/bootstrap-table-addrbar.js"></script>
+    --->
     <script src="./bootstrap-table-addrbar.js"></script>
 ```
 

@@ -7,7 +7,7 @@ Reference
 
 ## 1. Why use this ?
 
-Every time when changing page, sorting and searching operation, it will change the query params of the address bar. And while page loading, this plugin will use the query params in the address bar to make the request.
+Every time when changing page, sorting and searching operation, it will change the query params of the address bar. And while page loading, this plugin will use the query params in the address bar to make the request. Otherwise, you can click brower's back/forward button to achieve the same result. 
 
 like this
 
@@ -27,7 +27,9 @@ like this
 ```html
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap-table/1.14.2/bootstrap-table.min.js"></script>
+    <!--
+        <script src="https://raw.githubusercontent.com/generals-space/bootstrap-table-addrbar/master/bootstrap-table-addrbar.js"></script>
+    --->
     <script src="./bootstrap-table-addrbar.js"></script>
 ```
 
